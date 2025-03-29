@@ -13,6 +13,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   // 新しいメッセージが追加されたら自動スクロール
   const scrollToBottom = () => {
@@ -40,9 +41,18 @@ export default function Home() {
     
     if (!inputText.trim()) return;
     
-    const userMessage = { role: 'user' as const, content: inputText };
-    setMessages(prev => [...prev, userMessage]);
+    const userInputCopy = inputText.trim(); // 入力テキストのコピーを保存
+    
+    // 先にフォームをクリア
     setInputText('');
+    
+    // テキストエリアの高さをリセット
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
+    
+    const userMessage = { role: 'user' as const, content: userInputCopy };
+    setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
     
     try {
@@ -51,7 +61,7 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ inputText: userMessage.content }),
+        body: JSON.stringify({ inputText: userInputCopy }),
       });
     
       const data = await response.json();
@@ -70,6 +80,16 @@ export default function Home() {
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
+      
+      // フォームをリセット（念のため）
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+      
+      // 強制的に入力フィールドをクリア
+      setTimeout(() => {
+        setInputText('');
+      }, 0);
     }
   };
 
@@ -144,7 +164,7 @@ export default function Home() {
       {/* 入力フォーム（下部に固定） */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-gray-800 p-4">
         <div className="max-w-3xl mx-auto">
-          <form onSubmit={handleSubmit} className="relative">
+          <form ref={formRef} onSubmit={handleSubmit} className="relative">
             <textarea
               ref={textareaRef}
               value={inputText}
