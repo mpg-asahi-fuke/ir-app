@@ -56,7 +56,7 @@ export default function Home() {
     setIsLoading(true);
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_IR_API_HOST}/summaries`, {
+      const response = await fetch('https://58ckv15ude.execute-api.us-east-1.amazonaws.com/production/summaries', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
