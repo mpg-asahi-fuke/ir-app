@@ -67,7 +67,7 @@ export default function Home() {
       const data = await response.json();
       const assistantMessage = { 
         role: 'assistant' as const, 
-        content: data.outputText || '申し訳ありません、応答を生成できませんでした。'
+        content: data.response_text || '申し訳ありません、応答を生成できませんでした。'
       };
       
       setMessages(prev => [...prev, assistantMessage]);
