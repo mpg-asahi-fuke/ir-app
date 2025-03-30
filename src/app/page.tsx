@@ -56,7 +56,7 @@ export default function Home() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('https://58ckv15ude.execute-api.us-east-1.amazonaws.com/production/summaries', {
+      const response = await fetch('https://j45l6q6wfe.execute-api.us-east-1.amazonaws.com/production/summaries', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
