@@ -5,6 +5,8 @@ import type { NextAuthOptions } from "next-auth";
 
 // NextAuth標準のAccount型を使用し、型の互換性を確保します
 const authOptions: NextAuthOptions = {
+  // 認証のセキュリティを高めるために秘密鍵を設定
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CognitoProvider({
       clientId: process.env.COGNITO_CLIENT_ID!,
