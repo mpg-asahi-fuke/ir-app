@@ -29,5 +29,5 @@ const authOptions = {
 }
 
 // ハンドラーの生成とエクスポート
-const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions as any);
 export { handler as GET, handler as POST };
