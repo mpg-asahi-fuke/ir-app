@@ -1,8 +1,6 @@
 // https://next-auth.js.org/configuration/initialization#route-handlers-app
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
-import { JWT } from "next-auth/jwt";
-import { Session } from "next-auth";
 
 interface Account {
   access_token: string;
