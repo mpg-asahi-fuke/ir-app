@@ -2,7 +2,6 @@
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 import { JWT } from "next-auth/jwt";
-import { Session } from "next-auth";
 
 interface Account {
   access_token: string;
@@ -25,12 +24,6 @@ const authOptions = {
         token.accessToken = account.access_token
       }
       return token
-    },
-    async session({ session, token }: { session: Session; token: JWT & { accessToken?: string } }) {
-      if (token.accessToken) {
-        session.accessToken = token.accessToken
-      }
-      return session
     }
   }
 }
