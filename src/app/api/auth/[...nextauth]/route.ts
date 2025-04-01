@@ -3,14 +3,9 @@ import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 import { JWT } from "next-auth/jwt";
 import type { NextAuthOptions } from "next-auth";
+import type { Account as NextAuthAccount } from "next-auth";
 
-interface Account {
-  access_token: string;
-  [key: string]: unknown;
-}
-
-// 別ファイルでも使用できるようにlib/auth.tsに移動すべきですが、
-// 今回は簡単のため同じファイルで定義します
+// NextAuth標準のAccount型を使用し、型の互換性を確保します
 const authOptions: NextAuthOptions = {
   providers: [
     CognitoProvider({
@@ -20,8 +15,8 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account }: { token: JWT; account: Account | null }) {
-      if (account) {
+    async jwt({ token, account }) {
+      if (account && account.access_token) {
         token.accessToken = account.access_token
       }
       return token
