@@ -2,6 +2,7 @@
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 import { JWT } from "next-auth/jwt";
+import type { NextAuthOptions } from "next-auth";
 
 interface Account {
   access_token: string;
@@ -10,7 +11,7 @@ interface Account {
 
 // 別ファイルでも使用できるようにlib/auth.tsに移動すべきですが、
 // 今回は簡単のため同じファイルで定義します
-const authOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CognitoProvider({
       clientId: process.env.COGNITO_CLIENT_ID!,
@@ -29,5 +30,5 @@ const authOptions = {
 }
 
 // ハンドラーの生成とエクスポート
-const handler = NextAuth(authOptions as any);
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
