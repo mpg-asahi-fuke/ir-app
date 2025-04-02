@@ -42,6 +42,7 @@ const authOptions: NextAuthOptions = {
       return session;
     }
   },
+  // https://zenn.dev/link/comments/2d25093410b0f4
   jwt: {
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
