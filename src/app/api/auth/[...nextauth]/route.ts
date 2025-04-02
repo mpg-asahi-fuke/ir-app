@@ -41,7 +41,10 @@ const authOptions: NextAuthOptions = {
       session.accessToken = token.accessToken;
       return session;
     }
-  }
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_JWT_SECRET,
+  },
 }
 
 // ハンドラーの生成とエクスポート
