@@ -2,7 +2,6 @@
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 import type { NextAuthOptions } from "next-auth";
-import { JWT } from "next-auth/jwt";
 
 // NextAuthのSessionを拡張して独自のプロパティを追加
 declare module "next-auth" {
