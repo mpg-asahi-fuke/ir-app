@@ -58,9 +58,10 @@ export default function Home() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('https://j45l6q6wfe.execute-api.us-east-1.amazonaws.com/production/summaries', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/summaries`, {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${session?.accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ inputText: userInputCopy }),

@@ -2,6 +2,21 @@
 import NextAuth from "next-auth";
 import CognitoProvider from "next-auth/providers/cognito";
 import type { NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
+
+// NextAuthのSessionを拡張して独自のプロパティを追加
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string;
+  }
+}
+
+// JWTトークンの型も拡張
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string;
+  }
+}
 
 // NextAuth標準のAccount型を使用し、型の互換性を確保します
 const authOptions: NextAuthOptions = {
@@ -16,10 +31,16 @@ const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, account }) {
-      if (account && account.access_token) {
-        token.accessToken = account.access_token
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token;
       }
-      return token
+      return token;
+    },
+    async session({ session, token }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.accessToken = token.accessToken;
+      return session;
     }
   }
 }
