@@ -114,6 +114,9 @@ export default function Home() {
           <h1 className="font-bold text-lg bg-gradient-to-r from-zinc-600 to-zinc-900 dark:from-zinc-300 dark:to-zinc-100 bg-clip-text text-transparent">
             IR アシスタント
           </h1>
+          <a href="/about" className="font-bold text-lg bg-gradient-to-r from-zinc-600 to-zinc-900 dark:from-zinc-300 dark:to-zinc-100 bg-clip-text text-transparent">
+            IR アシスタントとは
+          </a>
         </div>
       </header>
 
