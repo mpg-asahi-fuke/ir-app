@@ -40,6 +40,12 @@ const authOptions: NextAuthOptions = {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
       return session;
+    },
+    redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) {
+        return `${baseUrl}/chats`;
+      }
+      return url;
     }
   },
   // https://zenn.dev/link/comments/2d25093410b0f4
