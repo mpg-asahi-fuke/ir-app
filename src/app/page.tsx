@@ -59,7 +59,7 @@ export default function Home() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/summaries`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer `,
+          'x-api-key': process.env.NEXT_PUBLIC_API_KEY!,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ inputText: userInputCopy }),
